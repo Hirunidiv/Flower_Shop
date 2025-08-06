@@ -66,8 +66,8 @@ const Contact = () => {
       {/* Contact Form Section */}
       <div className="contact-form-section">
         <div className="contact-form-container">
-          <h2 className="form-title">Contact Us</h2>
           <form className="contact-form">
+            <h2 className="form-title">Contact Us</h2>
             <div className="form-row">
               <div className="form-group">
                 <input 
