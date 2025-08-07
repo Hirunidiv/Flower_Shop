@@ -3,16 +3,18 @@ import './App.css'
 import Carousel from './components/Carousel'
 import ShopnowCard from './components/shopnowCard'
 import TopSellingFlowers from './components/TopSelling'
+import HomePage from '../pages/HomePage'
 
 function App() {
   
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar />
       <Carousel/>
       <ShopnowCard/>
-      <TopSellingFlowers/>
+      <TopSellingFlowers/> */}
+      <HomePage/>
     
     </>
   )
