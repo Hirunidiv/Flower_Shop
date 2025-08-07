@@ -36,11 +36,24 @@ const MiniNavbar = ({
           ))}
         </div>
 
-      
-        
+        {/* Filters Button */}
+        {showFilters && (
+          <button 
+            className={`filters-btn ${filtersOpen ? 'active' : ''}`}
+            onClick={handleFilterToggle}
+            aria-label="Toggle Filters"
+          >
+            <span className="filters-text">Filters</span>
+            <FiChevronDown 
+              className={`filters-arrow ${filtersOpen ? 'rotated' : ''}`} 
+              size={30} 
+              color="#000000"
+            />
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-export default MiniNavbar;
+export default MiniNavbar;

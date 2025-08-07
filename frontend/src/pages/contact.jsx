@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import MiniNavbar from '../components/MiniNavbar';
 import MapComponent from '../components/MapComponent';
 import './contact.css';
+import Footer from '../components/Footer';
 
 const Contact = () => {
   const [showFilters, setShowFilters] = useState(false);
@@ -31,7 +32,7 @@ const Contact = () => {
       <div className="contact-info-section">
         <div className="contact-info-container">
           <div className="contact-info-item">
-            <div className="contact-icon">
+            <div className="contact-icon-1">
               <FiMail />
             </div>
             <h3>Email</h3>
@@ -39,7 +40,7 @@ const Contact = () => {
           </div>
           
           <div className="contact-info-item">
-            <div className="contact-icon">
+            <div className="contact-icon-1">
               <FiPhone />
             </div>
             <h3>Phone</h3>
@@ -47,7 +48,7 @@ const Contact = () => {
           </div>
           
           <div className="contact-info-item">
-            <div className="contact-icon">
+            <div className="contact-icon-1">
               <FiMapPin />
             </div>
             <h3>Address</h3>
@@ -119,6 +120,9 @@ const Contact = () => {
           </form>
         </div>
       </div>
+      
+      {/* Footer */}
+      <Footer />
     </div>
     
   );

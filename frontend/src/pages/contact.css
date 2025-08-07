@@ -31,7 +31,7 @@
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
 }
 
-.contact-icon {
+.contact-icon-1 {
   width: 80px;
   height: 80px;
   background: #4CAF50;
@@ -42,7 +42,7 @@
   margin: 0 auto 20px;
 }
 
-.contact-icon svg {
+.contact-icon-1 svg {
   width: 40px;
   height: 40px;
   color: white;
