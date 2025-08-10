@@ -4,6 +4,7 @@ import Carousel from './components/Carousel'
 import ShopnowCard from './components/shopnowCard'
 import TopSellingFlowers from './components/TopSelling'
 import HomePage from '../pages/HomePage'
+import LoginPage from '../pages/LoginPage'
 
 function App() {
   
@@ -14,7 +15,8 @@ function App() {
       <Carousel/>
       <ShopnowCard/>
       <TopSellingFlowers/> */}
-      <HomePage/>
+      {/* <HomePage/> */}
+      <LoginPage/>
     
     </>
   )
