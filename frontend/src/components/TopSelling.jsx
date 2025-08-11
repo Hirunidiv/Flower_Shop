@@ -1,4 +1,5 @@
 import React from 'react';
+import './TopSelling.css';
 
 const PlantCard = ({ name, category, price, image, alt }) => {
   return (
