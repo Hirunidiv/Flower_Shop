@@ -1,5 +1,4 @@
 import React from 'react';
-import "./ToSelling.css"
 
 const PlantCard = ({ name, category, price, image, alt }) => {
   return (
@@ -13,7 +12,6 @@ const PlantCard = ({ name, category, price, image, alt }) => {
             <p className="plant-price">${price}</p>
         </div>
         <p className="plant-category">{category}</p>
-        
       </div>
       <button className="add-to-cart-btn">
         ADD TO CART 🛒
@@ -22,8 +20,10 @@ const PlantCard = ({ name, category, price, image, alt }) => {
   );
 };
 
-const TopSellingFlowers = () => {
-  const plants = [
+const TopSellingFlowers = ({ 
+  titleFirst = "TOP SELLING", 
+  titleSecond = "FLOWERS",
+  plants = [
     {
       name: "SNAKE PLANT",
       category: "Cactus",
@@ -52,12 +52,14 @@ const TopSellingFlowers = () => {
       image: "/topselling/top4.jpg",
       alt: "Homalomena"
     }
-  ];
+  ],
+  showViewMore = true
+}) => {
 
   return (
     <div className="container">
       <h1 className="title">
-        <span className="green">TOP SELLING</span> FLOWERS
+        <span className="green">{titleFirst}</span> {titleSecond}
       </h1>
 
       <div className="plants-grid">
@@ -73,9 +75,11 @@ const TopSellingFlowers = () => {
         ))}
       </div>
 
-      <div className="view-more-container">
-        <button className="view-more-btn">View More</button>
-      </div>
+      {showViewMore && (
+        <div className="view-more-container">
+          <button className="view-more-btn">View More</button>
+        </div>
+      )}
     </div>
   );
 };
