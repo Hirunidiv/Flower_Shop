@@ -6,6 +6,7 @@ import Contact from './pages/contact'
 import Cart from './pages/Cart'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import Userprofile from './pages/Userprofile'
 import './App.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile" element={<Userprofile />} />
         </Routes>
       </div>
     </Router>

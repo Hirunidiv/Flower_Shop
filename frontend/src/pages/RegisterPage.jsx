@@ -29,6 +29,32 @@ export default function RegisterPage() {
 
   const handleSubmit = () => {
     console.log('Registration attempt:', formData);
+    
+    // Basic validation
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
+      alert('Please fill in all required fields');
+      return;
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    
+    // Store user data in localStorage
+    const userData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      country: formData.country,
+      phoneNumber: formData.phoneNumber,
+      isLoggedIn: true
+    };
+    
+    localStorage.setItem('flowerShopUser', JSON.stringify(userData));
+    
+    // Redirect to the user profile page
+    navigate('/profile');
   };
 
   const handleSignIn = () => {
