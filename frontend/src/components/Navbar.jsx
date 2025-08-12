@@ -53,6 +53,12 @@ const Navbar = () => {
     navigate('/cart');
   };
 
+  // Handle user account navigation
+  const handleUserAccountClick = () => {
+    closeMenu(); // Close mobile menu if open
+    navigate('/login');
+  };
+
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
@@ -130,7 +136,7 @@ const Navbar = () => {
                   <span className="cart-badge">{cartItemCount > 99 ? '99+' : cartItemCount}</span>
                 )}
               </button>
-              <button className="action-btn user-btn" aria-label="User Account">
+              <button className="action-btn user-btn" aria-label="User Account" onClick={handleUserAccountClick}>
                 <FiUser size={32} color="#164C0D" />
               </button>
             </div>
@@ -147,7 +153,7 @@ const Navbar = () => {
                 <span className="cart-badge">{cartItemCount > 99 ? '99+' : cartItemCount}</span>
               )}
             </button>
-            <button className="action-btn user-btn" aria-label="User Account">
+            <button className="action-btn user-btn" aria-label="User Account" onClick={handleUserAccountClick}>
               <FiUser size={32} color="#164C0D" />
             </button>
           </div>
