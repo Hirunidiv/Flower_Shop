@@ -1,13 +1,13 @@
-import { useState } from 'react'
 import Navbar from './components/Navbar'
 import './App.css'
+import Adminpage from './pages/Adminpage'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
+      <Adminpage/>
     
     </>
   )
