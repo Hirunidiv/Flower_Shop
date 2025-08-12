@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './WishList.css';
-import TopSellingFlowers from '../components/TopSelling';
 
 const WishList = () => {
   const [cartItems, setCartItems] = useState([
@@ -9,7 +8,7 @@ const WishList = () => {
       name: 'SNAKE PLANT',
       category: 'Cactus',
       price: 149,
-      quantity: 2,
+      quantity: 1,
       image: '/topselling/top1.jpg',
       selected: false
     },
@@ -27,7 +26,7 @@ const WishList = () => {
       name: 'GOLDEN POTHOS',
       category: 'Pothos',
       price: 69,
-      quantity: 3,
+      quantity: 1,
       image: '/topselling/top3.jpg',
       selected: true
     },
@@ -36,7 +35,7 @@ const WishList = () => {
       name: 'HOMALOMENA',
       category: 'Bonsai',
       price: 119,
-      quantity: 5,
+      quantity: 1,
       image: '/topselling/top4.jpg',
       selected: false
     }
@@ -58,14 +57,16 @@ const WishList = () => {
 
   const toggleSelection = (id) => {
     setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, selected: !item.selected } : item
-      )
+      items.map(item => ({
+        ...item,
+        selected: item.id === id
+      }))
     );
   };
 
   const calculateTotals = () => {
-    const itemsTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const selectedItem = cartItems.find(item => item.selected);
+    const itemsTotal = selectedItem ? selectedItem.price * selectedItem.quantity : 0;
     const shipping = 5;
     const discount = 0;
     const total = itemsTotal - discount + shipping;
@@ -74,9 +75,9 @@ const WishList = () => {
   };
 
   const { itemsTotal, shipping, discount, total } = calculateTotals();
+  const selectedItem = cartItems.find(item => item.selected);
 
   return (
-    <>
     <div className="cart-container">
       <div className="cart-main">
         <h1 className="cart-title">CART</h1>
@@ -141,7 +142,10 @@ const WishList = () => {
           <h2 className="summary-title">SUMMARY</h2>
           
           <div className="summary-image">
-            <img src="/topselling/top3.jpg" alt="Selected item" />
+            <img 
+              src={selectedItem ? selectedItem.image : "/api/placeholder/80/80"} 
+              alt={selectedItem ? selectedItem.name : "No item selected"} 
+            />
           </div>
           
           <div className="summary-details">
@@ -188,11 +192,6 @@ const WishList = () => {
         </div>
       </div>
     </div>
-    <TopSellingFlowers
-      titleFirst='YOU MAY'
-      titleSecond='ALSO LIKE'
-    />
-    </>
   );
 };
 
