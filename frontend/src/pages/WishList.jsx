@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './WishList.css';
+import TopSellingFlowers from '../components/TopSelling';
 
 const WishList = () => {
   const [cartItems, setCartItems] = useState([
@@ -64,23 +65,24 @@ const WishList = () => {
     );
   };
 
-  const calculateTotals = () => {
-    const selectedItem = cartItems.find(item => item.selected);
-    const itemsTotal = selectedItem ? selectedItem.price * selectedItem.quantity : 0;
-    const shipping = 5;
-    const discount = 0;
-    const total = itemsTotal - discount + shipping;
+  // const calculateTotals = () => {
+  //   const selectedItem = cartItems.find(item => item.selected);
+  //   const itemsTotal = selectedItem ? selectedItem.price * selectedItem.quantity : 0;
+  //   const shipping = 5;
+  //   const discount = 0;
+  //   const total = itemsTotal - discount + shipping;
     
-    return { itemsTotal, shipping, discount, total };
-  };
+  //   return { itemsTotal, shipping, discount, total };
+  // };
 
-  const { itemsTotal, shipping, discount, total } = calculateTotals();
-  const selectedItem = cartItems.find(item => item.selected);
+  // const { itemsTotal, shipping, discount, total } = calculateTotals();
+  // const selectedItem = cartItems.find(item => item.selected);
 
   return (
-    <div className="cart-container">
+    <>
+      <div className="cart-container">
       <div className="cart-main">
-        <h1 className="cart-title">CART</h1>
+        <h1 className="cart-title">WISH LIST</h1>
         
         <div className="cart-items">
           {cartItems.map(item => (
@@ -129,7 +131,7 @@ const WishList = () => {
                 </div>
                 
                 <button className="checkout-btn">
-                  CHECK OUT ↗
+                  ADD TO CART ↗
                 </button>
               </div>
             </div>
@@ -137,7 +139,7 @@ const WishList = () => {
         </div>
       </div>
       
-      <div className="cart-sidebar">
+      {/* <div className="cart-sidebar">
         <div className="summary-section">
           <h2 className="summary-title">SUMMARY</h2>
           
@@ -190,8 +192,13 @@ const WishList = () => {
             Get a full refund if the item is not as described or not delivered.
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
+    <TopSellingFlowers
+      titleFirst='YOU MAY'
+      titleSecond='ALSO LIKE'
+    />
+    </>
   );
 };
 
