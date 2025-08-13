@@ -32,7 +32,6 @@ function Userprofile() {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showOrdersPopup, setShowOrdersPopup] = useState(false);
-  const [showCouponsPopup, setShowCouponsPopup] = useState(false);
   const [showPaymentsPopup, setShowPaymentsPopup] = useState(false);
   const [activePaymentTab, setActivePaymentTab] = useState('history');
   const [showAddCardForm, setShowAddCardForm] = useState(false);
@@ -229,13 +228,6 @@ function Userprofile() {
     setShowOrdersPopup(false);
   };
   
-  const handleCouponsClick = () => {
-    setShowCouponsPopup(true);
-  };
-  
-  const closeCouponsPopup = () => {
-    setShowCouponsPopup(false);
-  };
   
   const handlePaymentsClick = () => {
     setShowPaymentsPopup(true);
@@ -569,7 +561,6 @@ function Userprofile() {
 
                 <div className='action-buttons'>
                     <button onClick={handleOrdersClick}>MY ORDERS</button>
-                    <button onClick={handleCouponsClick}>MY COUPONS</button>
                     <button onClick={handlePaymentsClick}>MY PAYMENTS</button>
                 </div>
 
@@ -591,7 +582,7 @@ function Userprofile() {
                 <img src="/About/empty-orders.png" alt="No Orders" className="empty-orders-img" />
                 <h3>No Orders Yet</h3>
                 <p>You haven't placed any orders yet. Start shopping to see your orders here.</p>
-                <button className="shop-now-btn" onClick={() => navigate('/products')}>SHOP NOW</button>
+                <button className="shop-now-btn" onClick={() => navigate('/shop')}>SHOP NOW</button>
               </div>
               
               {/* Order list would go here when there are orders */}
@@ -622,66 +613,7 @@ function Userprofile() {
         </div>
       )}
       
-      {/* Coupons Popup */}
-      {showCouponsPopup && (
-        <div className="popup-overlay" onClick={closeCouponsPopup}>
-          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <div className="popup-header">
-              <h2>My Coupons</h2>
-              <button className="close-btn" onClick={closeCouponsPopup}>&times;</button>
-            </div>
-            <div className="popup-body">
-              {/* Available coupons section */}
-              <div className="coupons-container">
-                <h3 className="coupons-section-title">Available Coupons</h3>
-                
-                <div className="empty-coupons">
-                  <img src="/About/empty-coupon.png" alt="No Coupons" className="empty-coupons-img" />
-                  <h3>No Available Coupons</h3>
-                  <p>You don't have any active coupons at the moment. Check back later or subscribe to our newsletter for special offers!</p>
-                </div>
-                
-                {/* This would show when coupons are available */}
-                {/*
-                <div className="coupon-list">
-                  <div className="coupon-item">
-                    <div className="coupon-left">
-                      <div className="discount-amount">20% OFF</div>
-                      <div className="coupon-code">BLOOM20</div>
-                    </div>
-                    <div className="coupon-right">
-                      <h4>Summer Special Discount</h4>
-                      <p>Valid until: September 30, 2025</p>
-                      <p className="coupon-description">Get 20% off on all summer bouquets</p>
-                      <button className="copy-code-btn">COPY CODE</button>
-                    </div>
-                  </div>
-                  
-                  <div className="coupon-item">
-                    <div className="coupon-left">
-                      <div className="discount-amount">$10 OFF</div>
-                      <div className="coupon-code">FLOWER10</div>
-                    </div>
-                    <div className="coupon-right">
-                      <h4>New Customer Special</h4>
-                      <p>Valid until: December 31, 2025</p>
-                      <p className="coupon-description">$10 off on your first order above $50</p>
-                      <button className="copy-code-btn">COPY CODE</button>
-                    </div>
-                  </div>
-                </div>
-                */}
-              </div>
-              
-              <div className="coupon-subscribe">
-                <h3>Want More Discounts?</h3>
-                <p>Subscribe to our newsletter to receive exclusive coupons and special offers!</p>
-                <button className="subscribe-btn" onClick={() => navigate('/contact')}>SUBSCRIBE NOW</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
       
       {/* Payments Popup */}
       {showPaymentsPopup && (
