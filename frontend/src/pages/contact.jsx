@@ -68,16 +68,16 @@ const Contact = () => {
       <div className="contact-form-section">
         <div className="contact-form-container">
           <form className="contact-form">
-            <h2 className="form-title">Contact Us</h2>
-            <div className="form-row">
-              <div className="form-group">
+            <h2 className="contact-form-title">Contact Us</h2>
+            <div className="contact-form-row">
+              <div className="contact-form-group">
                 <input 
                   type="text" 
                   placeholder="Your Name (*)" 
                   required 
                 />
               </div>
-              <div className="form-group">
+              <div className="contact-form-group">
                 <input 
                   type="email" 
                   placeholder="Your Email (*)" 
@@ -86,14 +86,14 @@ const Contact = () => {
               </div>
             </div>
             
-            <div className="form-row">
-              <div className="form-group">
+            <div className="contact-form-row">
+              <div className="contact-form-group">
                 <input 
                   type="tel" 
                   placeholder="Phone" 
                 />
               </div>
-              <div className="form-group">
+              <div className="contact-form-group">
                 <select>
                   <option value="">Business Department</option>
                   <option value="sales">Sales</option>
@@ -105,15 +105,15 @@ const Contact = () => {
               </div>
             </div>
             
-            <div className="form-group">
+            <div className="contact-form-group">
               <textarea 
                 placeholder="Your Question"
                 rows="6"
               ></textarea>
             </div>
             
-            <div className="form-submit">
-              <button type="submit" className="submit-button">
+            <div className="contact-form-submit">
+              <button type="submit" className="contact-submit-button">
                 SUBMIT
               </button>
             </div>
