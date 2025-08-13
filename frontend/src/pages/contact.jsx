@@ -10,7 +10,7 @@ const Contact = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const breadcrumbData = [
-    { icon: <FiHome />, label: 'Home', link: '/' },
+    { icon: <FiHome size={25} color="#000000" />, label: 'Home', link: '/' },
     { label: 'Contact' }
   ];
 
@@ -67,7 +67,7 @@ const Contact = () => {
       {/* Contact Form Section */}
       <div className="contact-form-section">
         <div className="contact-form-container">
-          <form className="contact-form">
+          <form className="contact-page-form">
             <h2 className="contact-form-title">Contact Us</h2>
             <div className="contact-form-row">
               <div className="contact-form-group">
@@ -75,6 +75,7 @@ const Contact = () => {
                   type="text" 
                   placeholder="Your Name (*)" 
                   required 
+                  className="contact-form-input"
                 />
               </div>
               <div className="contact-form-group">
@@ -82,6 +83,7 @@ const Contact = () => {
                   type="email" 
                   placeholder="Your Email (*)" 
                   required 
+                  className="contact-form-input"
                 />
               </div>
             </div>
@@ -91,10 +93,11 @@ const Contact = () => {
                 <input 
                   type="tel" 
                   placeholder="Phone" 
+                  className="contact-form-input"
                 />
               </div>
               <div className="contact-form-group">
-                <select>
+                <select className="contact-form-select">
                   <option value="">Business Department</option>
                   <option value="sales">Sales</option>
                   <option value="wedding">Wedding Flowers</option>
@@ -109,6 +112,7 @@ const Contact = () => {
               <textarea 
                 placeholder="Your Question"
                 rows="6"
+                className="contact-form-textarea"
               ></textarea>
             </div>
             

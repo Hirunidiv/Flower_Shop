@@ -13,12 +13,21 @@ const Navbar = () => {
   // Load cart count from localStorage
   useEffect(() => {
     const updateCartCount = () => {
-      const savedCart = localStorage.getItem('flowerShopCart');
-      if (savedCart) {
-        const cart = JSON.parse(savedCart);
-        const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
-        setCartItemCount(totalCount);
-      } else {
+      try {
+        const savedCart = localStorage.getItem('flowerShopCart');
+        if (savedCart && savedCart !== '[]') {
+          const cart = JSON.parse(savedCart);
+          if (Array.isArray(cart)) {
+            const totalCount = cart.reduce((total, item) => total + (item.quantity || 0), 0);
+            setCartItemCount(totalCount);
+          } else {
+            setCartItemCount(0);
+          }
+        } else {
+          setCartItemCount(0);
+        }
+      } catch (error) {
+        console.error('Error updating cart count:', error);
         setCartItemCount(0);
       }
     };
@@ -53,10 +62,18 @@ const Navbar = () => {
     navigate('/cart');
   };
 
-  // Handle user account navigation
-  const handleUserAccountClick = () => {
+  // Handle profile navigation
+  const handleProfileClick = () => {
     closeMenu(); // Close mobile menu if open
-    navigate('/login');
+    
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('userLoggedIn');
+    
+    if (isLoggedIn === 'true') {
+      navigate('/profile');
+    } else {
+      navigate('/login');
+    }
   };
 
   // Prevent body scroll when mobile menu is open
@@ -92,7 +109,7 @@ const Navbar = () => {
         <div className="navbar-container">
           {/* Logo */}
           <div className="navbar-logo">
-            <img src="./navbar/nav.png" alt="Flora Shop Logo" />
+            <img src="/navbar/nav.png" alt="Flora Shop Logo" />
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -115,7 +132,7 @@ const Navbar = () => {
                 <Link to="/shop" className={`nav-link ${location.pathname === '/shop' ? 'active' : ''}`} onClick={closeMenu}>SHOP</Link>
               </li>
               <li className="nav-item">
-                <Link to="/category" className={`nav-link ${location.pathname === '/category' ? 'active' : ''}`} onClick={closeMenu}>CATEGORY</Link>
+                <Link to="/wishlist" className={`nav-link ${location.pathname === '/wishlist' ? 'active' : ''}`} onClick={closeMenu}>WISHLIST</Link>
               </li>
               <li className="nav-item">
                 <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMenu}>ABOUT</Link>
@@ -136,7 +153,7 @@ const Navbar = () => {
                   <span className="cart-badge">{cartItemCount > 99 ? '99+' : cartItemCount}</span>
                 )}
               </button>
-              <button className="action-btn user-btn" aria-label="User Account" onClick={handleUserAccountClick}>
+              <button className="action-btn user-btn" aria-label="User Account" onClick={handleProfileClick}>
                 <FiUser size={32} color="#164C0D" />
               </button>
             </div>
@@ -153,7 +170,7 @@ const Navbar = () => {
                 <span className="cart-badge">{cartItemCount > 99 ? '99+' : cartItemCount}</span>
               )}
             </button>
-            <button className="action-btn user-btn" aria-label="User Account" onClick={handleUserAccountClick}>
+            <button className="action-btn user-btn" aria-label="User Account" onClick={handleProfileClick}>
               <FiUser size={32} color="#164C0D" />
             </button>
           </div>

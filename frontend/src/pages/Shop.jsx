@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import MiniNavbar from '../components/MiniNavbar';
 import ProductGrid from '../components/ProductGrid';
@@ -9,10 +10,15 @@ import { BiSearch } from 'react-icons/bi';
 import './Shop.css';
 
 const Shop = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('recent');
   const [searchQuery, setSearchQuery] = useState('');
   const [cart, setCart] = useState([]);
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [notification, setNotification] = useState('');
 
   // Load cart from localStorage on component mount
   useEffect(() => {
@@ -27,12 +33,51 @@ const Shop = () => {
         console.error('Error parsing cart from localStorage:', error);
       }
     }
+    setIsCartLoaded(true);
   }, []);
+
+  // Handle URL parameters and localStorage for filtering
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const filterParam = urlParams.get('filter');
+    const tabParam = urlParams.get('tab');
+    const searchParam = urlParams.get('search');
+    
+    // Check if we're returning from a product page
+    const returnFromProduct = sessionStorage.getItem('returnFromProduct');
+    if (returnFromProduct) {
+      // Restore previous filter state
+      const savedState = JSON.parse(returnFromProduct);
+      setCategoryFilter(savedState.categoryFilter || 'all');
+      setActiveTab(savedState.activeTab || 'recent');
+      setSearchQuery(savedState.searchQuery || '');
+      setIsFilterOpen(savedState.isFilterOpen || false);
+      
+      // Clear the storage
+      sessionStorage.removeItem('returnFromProduct');
+    } else {
+      // Handle URL parameters for direct navigation
+      if (filterParam && ['valentine', 'wedding', 'houseplants', 'all'].includes(filterParam)) {
+        setCategoryFilter(filterParam);
+        setIsFilterOpen(true);
+      }
+      if (tabParam && ['recent', 'popular', 'special'].includes(tabParam)) {
+        setActiveTab(tabParam);
+      }
+      if (searchParam) {
+        setSearchQuery(decodeURIComponent(searchParam));
+      }
+    }
+  }, [location.search]);
 
   // Save cart to localStorage whenever cart changes
   useEffect(() => {
-    localStorage.setItem('flowerShopCart', JSON.stringify(cart));
-  }, [cart]);
+    if (isCartLoaded) {
+      localStorage.setItem('flowerShopCart', JSON.stringify(cart));
+      // Trigger cart update event for navbar after localStorage is updated
+      window.dispatchEvent(new CustomEvent('cartUpdated'));
+    }
+  }, [cart, isCartLoaded]);
 
   // Sample product data based on active tab and search query
   const getProductsByTab = (tab) => {
@@ -41,6 +86,7 @@ const Shop = () => {
         id: 1,
         name: "SNAKE PLANT",
         category: "Cactus",
+        filterCategory: "houseplants",
         price: 149,
         image: "/images/snake-plant.jpg",
         isRecent: true,
@@ -51,6 +97,7 @@ const Shop = () => {
         id: 2,
         name: "CANDELABRA ALOE",
         category: "Aloe Vera",
+        filterCategory: "houseplants",
         price: 39,
         image: "/images/candelabra-aloe.jpg",
         isRecent: false,
@@ -61,6 +108,7 @@ const Shop = () => {
         id: 3,
         name: "GOLDEN POTHOS",
         category: "Pothos",
+        filterCategory: "houseplants",
         price: 69,
         image: "/images/golden-pothos.jpg",
         isRecent: true,
@@ -71,6 +119,7 @@ const Shop = () => {
         id: 4,
         name: "HOMALOMENA",
         category: "Tropical",
+        filterCategory: "wedding",
         price: 119,
         image: "/images/homalomena.jpg",
         isRecent: false,
@@ -81,6 +130,7 @@ const Shop = () => {
         id: 5,
         name: "FIDDLE LEAF FIG",
         category: "Indoor Tree",
+        filterCategory: "valentine",
         price: 89,
         image: "/images/fiddle-leaf.jpg",
         isRecent: true,
@@ -91,6 +141,7 @@ const Shop = () => {
         id: 6,
         name: "PEACE LILY",
         category: "Flowering",
+        filterCategory: "valentine",
         price: 45,
         image: "/images/peace-lily.jpg",
         isRecent: false,
@@ -101,6 +152,7 @@ const Shop = () => {
         id: 7,
         name: "MONSTERA DELICIOSA",
         category: "Tropical",
+        filterCategory: "wedding",
         price: 79,
         image: "/images/fiddle-leaf.jpg",
         isRecent: true,
@@ -111,6 +163,7 @@ const Shop = () => {
         id: 8,
         name: "RUBBER PLANT",
         category: "Indoor Tree",
+        filterCategory: "houseplants",
         price: 59,
         image: "/images/fiddle-leaf.jpg",
         isRecent: false,
@@ -121,6 +174,7 @@ const Shop = () => {
         id: 9,
         name: "ZZ PLANT",
         category: "Low Light",
+        filterCategory: "valentine",
         price: 35,
         image: "/images/fiddle-leaf.jpg",
         isRecent: true,
@@ -131,6 +185,7 @@ const Shop = () => {
         id: 10,
         name: "PHILODENDRON",
         category: "Tropical",
+        filterCategory: "wedding",
         price: 55,
         image: "/images/fiddle-leaf.jpg",
         isRecent: false,
@@ -141,6 +196,7 @@ const Shop = () => {
         id: 11,
         name: "SPIDER PLANT",
         category: "Air Purifying",
+        filterCategory: "houseplants",
         price: 25,
         image: "/images/fiddle-leaf.jpg",
         isRecent: true,
@@ -151,8 +207,42 @@ const Shop = () => {
         id: 12,
         name: "DRACAENA",
         category: "Low Light",
+        filterCategory: "valentine",
         price: 65,
         image: "/images/fiddle-leaf.jpg",
+        isRecent: false,
+        isPopular: true,
+        isSpecial: true
+      },
+      {
+        id: 13,
+        name: "BRIDAL BOUQUET ROSE",
+        category: "Wedding Flowers",
+        filterCategory: "wedding",
+        price: 189,
+        image: "/images/wedding-1.jpg",
+        isRecent: true,
+        isPopular: true,
+        isSpecial: true
+      },
+      {
+        id: 14,
+        name: "WHITE LILY ARRANGEMENT",
+        category: "Wedding Flowers",
+        filterCategory: "wedding",
+        price: 145,
+        image: "/images/wedding-2.jpg",
+        isRecent: true,
+        isPopular: true,
+        isSpecial: false
+      },
+      {
+        id: 15,
+        name: "WEDDING CENTERPIECE",
+        category: "Wedding Flowers",
+        filterCategory: "wedding",
+        price: 225,
+        image: "/images/wedding-3.jpg",
         isRecent: false,
         isPopular: true,
         isSpecial: true
@@ -174,6 +264,13 @@ const Shop = () => {
         break;
       default:
         filteredProducts = allProducts;
+    }
+
+    // Filter by category
+    if (categoryFilter !== 'all') {
+      filteredProducts = filteredProducts.filter(product => 
+        product.filterCategory === categoryFilter
+      );
     }
 
     // Filter by search query
@@ -199,13 +296,42 @@ const Shop = () => {
     }
   ];
 
+  // Function to update URL with current filter state
+  const updateURL = ({ filter, tab, search }) => {
+    const params = new URLSearchParams();
+    if (filter && filter !== 'all') params.set('filter', filter);
+    if (tab && tab !== 'recent') params.set('tab', tab);
+    if (search && search.trim()) params.set('search', encodeURIComponent(search));
+    
+    const newURL = params.toString() ? `/shop?${params.toString()}` : '/shop';
+    navigate(newURL, { replace: true });
+  };
+
+  // Function to save current state for return navigation
+  const saveCurrentState = () => {
+    const currentState = {
+      categoryFilter,
+      activeTab,
+      searchQuery,
+      isFilterOpen
+    };
+    sessionStorage.setItem('returnFromProduct', JSON.stringify(currentState));
+  };
+
   const handleFilterToggle = (isOpen) => {
     setIsFilterOpen(isOpen);
     console.log('Filters are now:', isOpen ? 'open' : 'closed');
   };
 
+  const handleCategoryFilter = (filter) => {
+    setCategoryFilter(filter);
+    updateURL({ filter, tab: activeTab, search: searchQuery });
+    console.log('Category filter:', filter);
+  };
+
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
+    updateURL({ filter: categoryFilter, tab: tabName, search: searchQuery });
     console.log('Active tab:', tabName);
   };
 
@@ -215,7 +341,7 @@ const Shop = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Search is handled automatically by getProductsByTab function
+    updateURL({ filter: categoryFilter, tab: activeTab, search: searchQuery });
   };
 
   const handleVoiceSearch = () => {
@@ -225,6 +351,7 @@ const Shop = () => {
 
   const handleClearSearch = () => {
     setSearchQuery('');
+    updateURL({ filter: categoryFilter, tab: activeTab, search: '' });
   };
 
   const handleAddToCart = (product) => {
@@ -241,8 +368,13 @@ const Shop = () => {
       }
     });
     
-    // Simple notification
-    alert(`${product.name} added to cart!`);
+    // Show notification banner
+    setNotification(`${product.name} added to cart!`);
+    
+    // Clear notification after 3 seconds
+    setTimeout(() => {
+      setNotification('');
+    }, 3000);
   };
 
   return (
@@ -253,7 +385,16 @@ const Shop = () => {
         showFilters={true}
         onFilterToggle={handleFilterToggle}
         isFilterOpen={isFilterOpen}
+        activeFilter={categoryFilter}
+        onFilterSelect={handleCategoryFilter}
       />
+      
+      {/* Notification */}
+      {notification && (
+        <div className="shop-notification">
+          {notification}
+        </div>
+      )}
       
       {/* Search Section */}
       <section className="search-section">
@@ -366,6 +507,7 @@ const Shop = () => {
                       <ProductGrid 
                         products={rowProducts}
                         onAddToCart={handleAddToCart}
+                        onProductClick={saveCurrentState}
                         className="row-products-only"
                       />
                     </div>
@@ -379,7 +521,7 @@ const Shop = () => {
           
           {/* Other Products Sidebar - Spans all 3 rows */}
           <div className="other-products-sidebar">
-            <OtherProducts onAddToCart={handleAddToCart} />
+            <OtherProducts onAddToCart={handleAddToCart} onProductClick={saveCurrentState} />
           </div>
         </div>
         

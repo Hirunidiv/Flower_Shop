@@ -21,6 +21,42 @@ export default function LoginPage() {
 
   const handleSubmit = () => {
     console.log('Login attempt:', formData);
+    
+    // Basic validation
+    if (!formData.username || !formData.password) {
+      alert('Please enter both username and password');
+      return;
+    }
+    
+    // Here you would typically make an API call to authenticate
+    // For now, I'll simulate a successful login
+    try {
+      // Simulate successful login
+      // In a real app, you'd validate credentials with your backend
+      
+      // Set user as logged in
+      localStorage.setItem('userLoggedIn', 'true');
+      
+      // Store user data (you can customize this based on your needs)
+      const userData = {
+        username: formData.username,
+        firstName: 'User',
+        lastName: 'Name',
+        email: formData.username.includes('@') ? formData.username : 'user@example.com',
+        loginTime: new Date().toISOString()
+      };
+      
+      localStorage.setItem('flowerShopUser', JSON.stringify(userData));
+      
+      console.log('Login successful, redirecting to profile...');
+      
+      // Redirect to profile page
+      navigate('/profile');
+      
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Login failed. Please try again.');
+    }
   };
 
   const handleForgotPassword = () => {

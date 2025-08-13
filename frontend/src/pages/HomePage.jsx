@@ -1,28 +1,30 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Carousel from '../components/Carousel'
 import ShopnowCard from '../components/shopnowCard'
 import TopSellingFlowers from '../components/TopSelling'
+import Footer from '../components/Footer'
 import './HomePage.css'
 
-
-const slides = [
-        { src: "/slider/sliderImg.jpg", alt: "Slide 1" },
-        { src: "", alt: "Slide 2" },
-        { src: "", alt: "Slide 3" },
-    ];
-
 function HomePage() {
+  const navigate = useNavigate();
 
-    const [current, setCurrent] = useState(0);
-    
-        const prevSlide = () => {
-        setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-        };
-    
-        const nextSlide = () => {
-            setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-        };
+  const handleCheckout = () => {
+    navigate('/shop');
+  };
+
+  const handleValentineCategory = () => {
+    navigate('/shop?filter=valentine');
+  };
+
+  const handleWeddingCategory = () => {
+    navigate('/shop?filter=wedding');
+  };
+
+  const handleHousePlantsCategory = () => {
+    navigate('/shop?filter=houseplants');
+  };
     
   return (
     <div>
@@ -30,23 +32,6 @@ function HomePage() {
         <Carousel/>
         <ShopnowCard/>
         <TopSellingFlowers/>
-        <div className='slider-container'>
-           
-            <div className="slider-track"
-                style={{
-                transform: `translateX(-${current * 100}%)`,
-                }}
-            >
-                {slides.map((slide, idx) => (
-                <div className="slide" key={idx}>
-                    <img src={slide.src} alt={slide.alt} />
-                </div>
-                ))}
-            </div>
-            <button className="slider-btn prev" onClick={prevSlide}>&lt;</button>
-            <button className="slider-btn next" onClick={nextSlide}>&gt;</button>
-    
-        </div>
         <div className="categories-container">
       <h1 className="categories-title">
         <span className="green-text">MOST POPULAR</span> CATEGORIES
@@ -73,7 +58,7 @@ function HomePage() {
                 Maecenas eget condimentum velit, sit amet feugiat lectus. 
                 Class aptent taciti
               </p>
-              <button className="checkout-btn">Checkout</button>
+              <button className="checkout-btn" onClick={handleValentineCategory}>View</button>
             </div>
           </div>
         </div>
@@ -89,7 +74,7 @@ function HomePage() {
                 Maecenas eget condimentum velit, sit amet feugiat lectus. 
                 Class aptent taciti
               </p>
-              <button className="checkout-btn">Checkout</button>
+              <button className="checkout-btn" onClick={handleWeddingCategory}>View</button>
             </div>
             <div className="category-image">
               <img 
@@ -121,7 +106,7 @@ function HomePage() {
                 condimentum velit, sit amet feugiat lectus. Class aptent 
                 taciti
               </p>
-              <button className="checkout-btn">Checkout</button>
+              <button className="checkout-btn" onClick={handleHousePlantsCategory}>View</button>
             </div>
           </div>
         </div>
@@ -164,6 +149,7 @@ function HomePage() {
       </div>
     </div>
 
+    <Footer />
     </div>
   )
 }
