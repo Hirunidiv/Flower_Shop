@@ -449,10 +449,10 @@ function Userprofile() {
       <div className='myprofile'>
         <h1>My Profile</h1>
 
-        <div className='profile-details'>
-            <div className='propic'><img src='/About/User.jpg' alt='Profile' /></div>
-
-            <div className='profile-info'>
+    <div className='profile-details'>
+      <div className='propic'><img src='/About/User.jpg' alt='Profile' /></div>
+    </div>
+    <div className='profile-info'>
                 
                 <div className='ProName'>
                   <h1>{userData.firstName.toUpperCase()} {userData.lastName.toUpperCase()}</h1>
@@ -564,9 +564,8 @@ function Userprofile() {
                     <button onClick={handlePaymentsClick}>MY PAYMENTS</button>
                 </div>
 
-            </div>
-        </div>
       </div>
+    </div>
       
       {/* Orders Popup */}
       {showOrdersPopup && (
